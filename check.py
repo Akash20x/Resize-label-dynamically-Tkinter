@@ -17,7 +17,6 @@ img = Image.open(filepath)
 tk_im = ImageTk.PhotoImage(img)
 
 
-
 def drag_start(event):
     widget = event.widget
     widget.startX = event.x
@@ -30,10 +29,11 @@ def drag_motion(event):
     widget.place(x=x,y=y)
 
 
-xi=100
-yi=100
-wi=100
-hi=100
+xi=img.size[0]
+yi=img.size[1]
+wi=img.size[0]
+hi=img.size[1]
+
 
 def grow():
     global img
@@ -44,8 +44,8 @@ def grow():
     global hi 
     i=0
     while i<2:
-        img = img.resize((xi, yi))
-        tk_im=ImageTk.PhotoImage(img)
+        resized_img = img.resize((xi, yi),resample=Image.NEAREST)
+        tk_im=ImageTk.PhotoImage(resized_img)
         my_label.configure(width=wi,height=hi,image=tk_im)
         my_label.image=tk_im
         xi+=1
@@ -64,8 +64,8 @@ def shrink():
     global hi 
     i=0
     while i<2:
-        img = img.resize((xi, yi))
-        tk_im=ImageTk.PhotoImage(img)
+        resized_img = img.resize((xi, yi),resample=Image.NEAREST)
+        tk_im=ImageTk.PhotoImage(resized_img)
         my_label.configure(width=wi,height=hi,image=tk_im)
         my_label.image=tk_im
         xi-=1
